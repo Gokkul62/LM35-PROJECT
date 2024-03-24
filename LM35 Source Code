@@ -1,0 +1,23 @@
+const int sensorPin = A0;
+const int ledPin = 13;
+unsigned long lastBlinkTime = 0;
+int blinkInterval = 250;
+void setup() {
+  pinMode(ledPin,OUTPUT);
+}
+void loop() {
+  int sensorValue = analogRead(sensorPin);
+  float temperature = sensorValue*5.0*100/1023.0;
+  if (temperature < 30){
+    blinkInterval = 250;
+  } else {
+    blinkInterval = 500;
+  }
+  unsigned long currentTime = micros();
+  if (currentTime - lastBlinkTime >= blinkInterval * 1000){
+    digitalWrite(ledPin,!digitalRead(ledPin));
+    lastBlinkTime = currentTime;
+  }
+}
+
+
